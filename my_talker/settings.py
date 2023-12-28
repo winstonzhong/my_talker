@@ -11,11 +11,16 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import constants
+import sys
+
+ 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+# sys.path.append(os.path.join(os.path.dirname(BASE_DIR), 'caidao'))
+sys.path.append(str(BASE_DIR.parent / 'caidao'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -37,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'base_sd',
 ]
 
 MIDDLEWARE = [
@@ -77,9 +83,25 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+
+    'base_sd': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'base_sd',
+        'USER': constants.MYSQL_USER_CENTER,
+        'PASSWORD': constants.MYSQL_PASSWORD_CENTER,
+        'HOST': constants.MYSQL_HOST_CENTER,
+        'PORT': '3306',
+        'OPTIONS': {'charset': 'utf8mb4'},
+    },
+    
 }
 
+
+DATABASE_ROUTERS = ['database_router.DatabaseAppsRouter']
+DATABASE_APPS_MAPPING = {
+    'base_sd': 'base_sd',
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
