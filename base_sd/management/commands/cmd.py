@@ -81,11 +81,22 @@ class Command(BaseCommand):
         # print(dir(options))
         if options.get('test'):
             # print('testing..')
-            args = DummyArg(options)
             s = ShootingScene.objects.get(id=26)
             print(s.fpath_audio_4080)
             print(s.fpath_img)
+            options['driven_audio'] = s.fpath_audio_4080
+            options['source_image'] = s.fpath_img
+            options['preprocess'] = 'full'
+            options['still'] = True
+            options['enhancer'] = 'gfpgan'
+            options['result_dir'] = 'output'
+            
+            
+            # --result_dir output  --enhancer gfpgan --still --preprocess full
+            args = DummyArg(options)
+            
+            
             # print(args.driven_audio)
             # print(args.device)
-            # run_args(args)
+            run_args(args)
             return
