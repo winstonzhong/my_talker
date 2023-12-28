@@ -3,6 +3,7 @@ import os
 from django.db import models
 
 from caidao_tools.django.abstract import AbstractModel
+from django.utils.functional import cached_property
 
 BASE_DIR = '/mnt/56T/static/media/uploaded'
 
@@ -93,21 +94,24 @@ class ShootingScene(AbstractModel):
     class Meta:
         verbose_name_plural = "场景"
 
-    @property
-    def fpath_auido_trimed(self):
-        fpath = self.script.fpath_auido_trimed
-        return os.path.join(os.path.dirname(fpath),
-                            f'{self.script.id}_{self.num}_{self.id}_{os.path.basename(fpath)}',                            
-                            )
+    # @property
+    # def fpath_auido_trimed(self):
+    #     fpath = self.script.fpath_auido_trimed
+    #     return os.path.join(os.path.dirname(fpath),
+    #                         f'{self.script.id}_{self.num}_{self.id}_{os.path.basename(fpath)}',                            
+    #                         )
         
-    @property
+    @cached_property
     def fpath_audio_4080(self):
-        # base_dir = '/mnt/56T/static/media/uploaded'
-        return f'{BASE_DIR}/{self.script.id}_{self.num}_{self.id}_{os.path.basename(self.script.fpath_auido_trimed)}'                            
+        return f'{BASE_DIR}/{self.script.id}_{self.num}_{self.id}_{os.path.basename(self.script.fpath_auido_trimed)}'
+    
+    @cached_property
+    def fpath_img(self):
+        return f'{BASE_DIR}/{os.path.basename(self.scene.name)}'                            
         
     
     def has_audio_trimed(self):
-        return os.path.lexists(self.script.fpath_auido_trimed) and os.path.lexists(self.fpath_auido_trimed)
+        return os.path.lexists(self.fpath_audio_4080)
     
     @property
     def next(self):
