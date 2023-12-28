@@ -7,6 +7,7 @@ Created on 2015年8月14日
 
 from django.core.management.base import BaseCommand
 
+from helper_talker import get_options
 
 
 class Command(BaseCommand):
@@ -18,3 +19,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if options.get('test'):
             print('testing..')
+            print(get_options())

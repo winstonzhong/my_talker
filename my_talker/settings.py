@@ -21,6 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # sys.path.append(os.path.join(os.path.dirname(BASE_DIR), 'caidao'))
 sys.path.append(str(BASE_DIR.parent / 'caidao'))
+
+if (BASE_DIR.parent / 'app_sadtalker.py').exists:
+    sys.path.append(str(BASE_DIR.parent))
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
