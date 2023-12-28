@@ -81,8 +81,9 @@ class Command(BaseCommand):
         # print(dir(self))
         # print(dir(options))
         if options.get('test'):
-            print('testing..')
+            # print('testing..')
             args = DummyArg(options)
-            print(args.driven_audio)
-            print(args.device)
+            # print(args.driven_audio)
+            # print(args.device)
+            run_args(args)
             return
