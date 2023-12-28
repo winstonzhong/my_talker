@@ -6,9 +6,12 @@ Created on 2015年8月14日
 '''
 
 from django.core.management.base import BaseCommand
-
 import torch
 
+from my_talker.settings import BASE_DIR
+
+
+ROOT_DIR = BASE_DIR.parent
 # from helper_talker import get_options
 
 class DummyArg(object):
@@ -25,7 +28,7 @@ class Command(BaseCommand):
         parser.add_argument('--name', nargs = "?", default='', type=str)
 
 
-        parser.add_argument("--driven_audio", default='./examples/driven_audio/bus_chinese.wav', help="path to driven audio")
+        parser.add_argument("--driven_audio", default=f'{ROOT_DIR}/examples/driven_audio/bus_chinese.wav', help="path to driven audio")
         parser.add_argument("--source_image", default='./examples/source_image/full_body_1.png', help="path to source image")
         parser.add_argument("--ref_eyeblink", default=None, help="path to reference video providing eye blinking")
         parser.add_argument("--ref_pose", default=None, help="path to reference video providing pose")
