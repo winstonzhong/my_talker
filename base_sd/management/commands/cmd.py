@@ -12,7 +12,8 @@ from my_talker.settings import BASE_DIR
 
 
 ROOT_DIR = BASE_DIR.parent
-# from helper_talker import get_options
+
+from helper_talker import get_options
 
 class DummyArg(object):
     def __init__(self, d):
@@ -29,11 +30,11 @@ class Command(BaseCommand):
 
 
         parser.add_argument("--driven_audio", default=f'{ROOT_DIR}/examples/driven_audio/bus_chinese.wav', help="path to driven audio")
-        parser.add_argument("--source_image", default='./examples/source_image/full_body_1.png', help="path to source image")
+        parser.add_argument("--source_image", default=f'{ROOT_DIR}/examples/source_image/full_body_1.png', help="path to source image")
         parser.add_argument("--ref_eyeblink", default=None, help="path to reference video providing eye blinking")
         parser.add_argument("--ref_pose", default=None, help="path to reference video providing pose")
-        parser.add_argument("--checkpoint_dir", default='./checkpoints', help="path to output")
-        parser.add_argument("--result_dir", default='./results', help="path to output")
+        parser.add_argument("--checkpoint_dir", default=f'{ROOT_DIR}/checkpoints', help="path to output")
+        parser.add_argument("--result_dir", default=f'{ROOT_DIR}/results', help="path to output")
         parser.add_argument("--pose_style", type=int, default=0,  help="input pose style from [0, 46)")
         parser.add_argument("--batch_size", type=int, default=2,  help="the batch size of facerender")
         parser.add_argument("--size", type=int, default=256,  help="the image size of the facerender")
@@ -55,7 +56,7 @@ class Command(BaseCommand):
         parser.add_argument('--net_recon', type=str, default='resnet50', choices=['resnet18', 'resnet34', 'resnet50'], help='useless')
         parser.add_argument('--init_path', type=str, default=None, help='Useless')
         parser.add_argument('--use_last_fc',default=False, help='zero initialize the last fc')
-        parser.add_argument('--bfm_folder', type=str, default='./checkpoints/BFM_Fitting/')
+        parser.add_argument('--bfm_folder', type=str, default=f'{ROOT_DIR}/checkpoints/BFM_Fitting/')
         parser.add_argument('--bfm_model', type=str, default='BFM_model_front.mat', help='bfm model')
         
         # default renderer parameters
