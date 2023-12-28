@@ -11,6 +11,7 @@ import torch
 from helper_talker import run_args
 
 from my_talker.settings import ROOT_DIR
+from base_sd.models import ShootingScene
 
 
 class DummyArg(object):
@@ -81,7 +82,10 @@ class Command(BaseCommand):
         if options.get('test'):
             # print('testing..')
             args = DummyArg(options)
+            s = ShootingScene.objects.get(id=26)
+            print(s.fpath_audio_4080)
+            print(s.fpath_img)
             # print(args.driven_audio)
             # print(args.device)
-            run_args(args)
+            # run_args(args)
             return
