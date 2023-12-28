@@ -87,15 +87,13 @@ class Command(BaseCommand):
             options['driven_audio'] = s.fpath_audio_4080
             options['source_image'] = s.fpath_img
             options['preprocess'] = 'full'
-            # options['still'] = True
+            options['still'] = True
             options['enhancer'] = 'gfpgan'
             options['result_dir'] = 'output'
-            
+            options['fpath_dst'] = s.fpath_video
             
             # --result_dir output  --enhancer gfpgan --still --preprocess full
             args = DummyArg(options)
-            
-            
             # print(args.driven_audio)
             # print(args.device)
             run_args(args)
