@@ -5,7 +5,18 @@ from django.db import models
 from caidao_tools.django.abstract import AbstractModel
 
 
-# Create your models here.
+class Actor(AbstractModel):
+    name = models.CharField(max_length=20)
+    description = models.TextField(verbose_name='人物描述')
+    mugshot = models.FileField(upload_to=r'V:\static\media\uploaded', null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "演员"
+        
+    @property
+    def url_mugshot(self):
+        return f'/static/{self.mugshot.name}'
+
 class Audio(AbstractModel):
     sound_name = models.CharField(max_length=255, null=True, blank=True, verbose_name='声音名称')
     audio = models.FileField(upload_to=r'V:\static\media\uploaded', null=True, blank=True, verbose_name='原声')
@@ -21,22 +32,11 @@ class Audio(AbstractModel):
     @property
     def url_sound(self):
         return f'/static/{self.audio.name}'
-
-class Actor(AbstractModel):
-    name = models.CharField(max_length=20)
-    description = models.TextField(verbose_name='人物描述')
-    mugshot = models.FileField(upload_to=r'V:\static\media\uploaded', null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = "演员"
-        
-    @property
-    def url_mugshot(self):
-        return f'/static/{self.mugshot.name}'
     
 class ShootingScript(AbstractModel):
     name = models.CharField(max_length=20, null=True, blank=True, verbose_name='剧本名')
-    audio = models.ForeignKey(Audio, verbose_name='音频', related_name='audio_origin', null=True, blank=True, on_delete=models.DO_NOTHING)
+    audio = models.ForeignKey(Audio, verbose_name='人声', related_name='audio_voice', null=True, blank=True, on_delete=models.DO_NOTHING)
+    music = models.ForeignKey(Audio, verbose_name='音乐', related_name='audio_music', null=True, blank=True, on_delete=models.DO_NOTHING)
     subtitles = models.TextField(null=True, blank=True)
     
     # audio_trimed = models.ForeignKey(Audio, verbose_name='切分的音频', related_name='audio_trimed', null=True, blank=True, on_delete=models.DO_NOTHING)
@@ -53,8 +53,21 @@ class ShootingScript(AbstractModel):
                             f'trimed_{os.path.basename(self.audio.audio.path)}',                            
                             )
     
-         
+    def has_audio_trimed(self):
+        audio = self.audio.audio
+        if not audio or not audio.name:
+            return False
+        if not os.path.lexists(audio.path):
+            return False
+        return os.path.lexists(self.fpath_auido_trimed)
     
+    @property
+    def start_time(self):
+        return self.shootingscene_set.order_by('num').first().start
+        
+    @property
+    def end_time(self):
+        return self.shootingscene_set.order_by('num').last().end
 
 class ShootingScene(AbstractModel):
     script = models.ForeignKey(ShootingScript, verbose_name='拍摄脚本', null=True, blank=True, on_delete=models.DO_NOTHING)
@@ -78,3 +91,32 @@ class ShootingScene(AbstractModel):
     
     class Meta:
         verbose_name_plural = "场景"
+
+    @property
+    def fpath_auido_trimed(self):
+        fpath = self.script.fpath_auido_trimed
+        return os.path.join(os.path.dirname(fpath),
+                            f'{self.script.id}_{self.num}_{self.id}_{os.path.basename(fpath)}',                            
+                            )
+    
+    def has_audio_trimed(self):
+        return os.path.lexists(self.script.fpath_auido_trimed) and os.path.lexists(self.fpath_auido_trimed)
+    
+    @property
+    def next(self):
+        return ShootingScene.objects.filter(script=self.script, num__gt=self.num).order_by('num').first()
+    
+    def is_following(self):
+        return not self.scene.name
+    
+    @property
+    def last_following(self):
+        assert not self.is_following()
+        one = self
+        while 1:
+            n = one.next
+            if n is None or not n.is_following():
+                return one
+            one = n
+
+        
