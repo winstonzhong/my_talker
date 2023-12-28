@@ -19,4 +19,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if options.get('test'):
             print('testing..')
-            print(get_options())
+            get_options()
