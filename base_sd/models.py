@@ -105,6 +105,9 @@ class ShootingScene(AbstractModel):
     @cached_property
     def fpath_video(self):
         return f'''{BASE_DIR}/{os.path.basename(self.scene.name).rsplit('.',1)[-2]}.mp4'''
+    
+    def has_video(self):
+        return os.path.lexists(self.fpath_video)
                                     
         
     def is_following(self):

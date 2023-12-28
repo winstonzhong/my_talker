@@ -8,10 +8,9 @@ Created on 2015年8月14日
 from django.core.management.base import BaseCommand
 import torch
 
+from base_sd.models import ShootingScene, ShootingScript
 from helper_talker import run_args
-
 from my_talker.settings import ROOT_DIR
-from base_sd.models import ShootingScene
 
 
 class DummyArg(object):
@@ -79,22 +78,27 @@ class Command(BaseCommand):
         # print(self)
         # print(dir(self))
         # print(dir(options))
+
+        options['preprocess'] = 'full'
+        options['still'] = True
+        options['enhancer'] = 'gfpgan'
+        options['result_dir'] = 'output'
+
+
         if options.get('test'):
             # print('testing..')
-            s = ShootingScene.objects.get(id=26)
-            print(s.fpath_audio_4080)
-            print(s.fpath_img)
-            options['driven_audio'] = s.fpath_audio_4080
-            options['source_image'] = s.fpath_img
-            options['preprocess'] = 'full'
-            options['still'] = True
-            options['enhancer'] = 'gfpgan'
-            options['result_dir'] = 'output'
-            options['fpath_video'] = s.fpath_video
+            ss = ShootingScript.objects.get(id=2)
+            for s in ss.shootingscene_set.filter():
+                if s.is_following():
+                    continue
+                
+                if s.has_video():
+                    continue
+                
+                options['driven_audio'] = s.fpath_audio_4080
+                options['source_image'] = s.fpath_img
+                options['fpath_video'] = s.fpath_video
             
-            # --result_dir output  --enhancer gfpgan --still --preprocess full
-            args = DummyArg(options)
-            # print(args.driven_audio)
-            # print(args.device)
-            run_args(args)
+                args = DummyArg(options)
+                run_args(args)
             return
