@@ -90,7 +90,7 @@ class Command(BaseCommand):
             options['still'] = True
             options['enhancer'] = 'gfpgan'
             options['result_dir'] = 'output'
-            options['fpath_dst'] = s.fpath_video
+            options['fpath_video'] = s.fpath_video
             
             # --result_dir output  --enhancer gfpgan --still --preprocess full
             args = DummyArg(options)
