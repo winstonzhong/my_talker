@@ -17,6 +17,8 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
+        print(args)
+        print(options)
         if options.get('test'):
             print('testing..')
-            get_options()
+            # get_options()
