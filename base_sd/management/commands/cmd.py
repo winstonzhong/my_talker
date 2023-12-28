@@ -7,8 +7,9 @@ Created on 2015年8月14日
 
 from django.core.management.base import BaseCommand
 
+import torch
 
-from helper_talker import get_options
+# from helper_talker import get_options
 
 class DummyArg(object):
     def __init__(self, d):
@@ -60,6 +61,14 @@ class Command(BaseCommand):
         parser.add_argument('--camera_d', type=float, default=10.)
         parser.add_argument('--z_near', type=float, default=5.)
         parser.add_argument('--z_far', type=float, default=15.)
+        
+        parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu')
+
+        # if torch.cuda.is_available() and not args.cpu:
+        #     args.device = "cuda"
+        # else:
+        #     args.device = "cpu"
+
 
     def handle(self, *args, **options):
         # print(args)
@@ -71,6 +80,5 @@ class Command(BaseCommand):
             print('testing..')
             args = DummyArg(options)
             print(args.driven_audio)
-            # from helper_talker import get_options
-            # print(get_options())
+            print(args.device)
             return
