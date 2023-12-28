@@ -131,6 +131,8 @@ def get_options():
     parser.add_argument('--camera_d', type=float, default=10.)
     parser.add_argument('--z_near', type=float, default=5.)
     parser.add_argument('--z_far', type=float, default=15.)
+    
+    parser.add_argument('--test', action='store_true', default=False)
 
     args = parser.parse_args()
 
