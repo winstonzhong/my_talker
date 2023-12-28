@@ -87,7 +87,7 @@ class Command(BaseCommand):
             options['driven_audio'] = s.fpath_audio_4080
             options['source_image'] = s.fpath_img
             options['preprocess'] = 'full'
-            options['still'] = True
+            # options['still'] = True
             options['enhancer'] = 'gfpgan'
             options['result_dir'] = 'output'
             
