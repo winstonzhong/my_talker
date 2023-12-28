@@ -15,3 +15,4 @@ db.sqlite3-journal
 /data
 *.pth
 page.xml
+cfg.dat
