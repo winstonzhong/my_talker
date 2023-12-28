@@ -63,3 +63,4 @@ class Command(BaseCommand):
             print('testing..')
             # from helper_talker import get_options
             print(get_options())
+            return
