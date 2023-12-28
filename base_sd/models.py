@@ -94,13 +94,6 @@ class ShootingScene(AbstractModel):
     class Meta:
         verbose_name_plural = "场景"
 
-    # @property
-    # def fpath_auido_trimed(self):
-    #     fpath = self.script.fpath_auido_trimed
-    #     return os.path.join(os.path.dirname(fpath),
-    #                         f'{self.script.id}_{self.num}_{self.id}_{os.path.basename(fpath)}',                            
-    #                         )
-        
     @cached_property
     def fpath_audio_4080(self):
         return f'{BASE_DIR}/{self.script.id}_{self.num}_{self.id}_{os.path.basename(self.script.fpath_auido_trimed)}'
@@ -109,25 +102,7 @@ class ShootingScene(AbstractModel):
     def fpath_img(self):
         return f'{BASE_DIR}/{os.path.basename(self.scene.name)}'                            
         
-    
-    def has_audio_trimed(self):
-        return os.path.lexists(self.fpath_audio_4080)
-    
-    @property
-    def next(self):
-        return ShootingScene.objects.filter(script=self.script, num__gt=self.num).order_by('num').first()
-    
     def is_following(self):
         return not self.scene.name
-    
-    @property
-    def last_following(self):
-        assert not self.is_following()
-        one = self
-        while 1:
-            n = one.next
-            if n is None or not n.is_following():
-                return one
-            one = n
-
+  
         
