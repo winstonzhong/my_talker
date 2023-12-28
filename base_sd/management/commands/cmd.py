@@ -13,7 +13,7 @@ from my_talker.settings import BASE_DIR
 
 ROOT_DIR = BASE_DIR.parent
 
-from helper_talker import get_options
+from helper_talker import run_args
 
 class DummyArg(object):
     def __init__(self, d):
