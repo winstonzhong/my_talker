@@ -8,12 +8,10 @@ Created on 2015年8月14日
 from django.core.management.base import BaseCommand
 import torch
 
-from my_talker.settings import BASE_DIR
-
-
-ROOT_DIR = BASE_DIR.parent
-
 from helper_talker import run_args
+
+from my_talker.settings import ROOT_DIR
+
 
 class DummyArg(object):
     def __init__(self, d):

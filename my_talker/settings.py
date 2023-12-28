@@ -19,6 +19,8 @@ import sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ROOT_DIR = BASE_DIR.parent
+
 # sys.path.append(os.path.join(os.path.dirname(BASE_DIR), 'caidao'))
 sys.path.append(str(BASE_DIR.parent / 'caidao'))
 
