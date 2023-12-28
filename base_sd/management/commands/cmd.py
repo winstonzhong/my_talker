@@ -56,6 +56,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print(args)
         print(options)
+        print(self)
+        print(dir(self))
         if options.get('test'):
             print('testing..')
             # get_options()
