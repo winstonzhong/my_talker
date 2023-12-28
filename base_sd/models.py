@@ -4,6 +4,7 @@ from django.db import models
 
 from caidao_tools.django.abstract import AbstractModel
 
+BASE_DIR = '/mnt/56T/static/media/uploaded'
 
 class Actor(AbstractModel):
     name = models.CharField(max_length=20)
@@ -98,6 +99,12 @@ class ShootingScene(AbstractModel):
         return os.path.join(os.path.dirname(fpath),
                             f'{self.script.id}_{self.num}_{self.id}_{os.path.basename(fpath)}',                            
                             )
+        
+    @property
+    def fpath_audio_4080(self):
+        # base_dir = '/mnt/56T/static/media/uploaded'
+        return f'{BASE_DIR}/{self.script.id}_{self.num}_{self.id}_{os.path.basename(self.script.fpath_auido_trimed)}'                            
+        
     
     def has_audio_trimed(self):
         return os.path.lexists(self.script.fpath_auido_trimed) and os.path.lexists(self.fpath_auido_trimed)
