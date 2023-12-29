@@ -67,7 +67,7 @@ class Command(BaseCommand):
         parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu')
         
         
-        parser.add_argument('--script_id', nargs='+', type=int, default=None, help="the input script id")
+        parser.add_argument('--script_id', nargs='?', type=int, default=None, help="the input script id")
 
         # if torch.cuda.is_available() and not args.cpu:
         #     args.device = "cuda"
