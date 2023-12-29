@@ -87,7 +87,7 @@ class Command(BaseCommand):
 
         if options.get('test'):
             # print('testing..')
-            ss = ShootingScript.objects.get(id=2)
+            ss = ShootingScript.objects.get(id=4)
             for s in ss.shootingscene_set.filter():
                 if s.is_following():
                     continue
