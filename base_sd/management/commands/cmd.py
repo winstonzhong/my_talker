@@ -65,6 +65,9 @@ class Command(BaseCommand):
         parser.add_argument('--z_far', type=float, default=15.)
         
         parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu')
+        
+        
+        parser.add_argument('--script_id', nargs='+', type=int, default=None, help="the input script id")
 
         # if torch.cuda.is_available() and not args.cpu:
         #     args.device = "cuda"
@@ -87,7 +90,7 @@ class Command(BaseCommand):
 
         if options.get('test'):
             # print('testing..')
-            ss = ShootingScript.objects.get(id=4)
+            ss = ShootingScript.objects.get(id=options.get('script_id'))
             for s in ss.shootingscene_set.filter():
                 if s.is_following():
                     continue
