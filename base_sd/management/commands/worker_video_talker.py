@@ -35,6 +35,11 @@ class Command(BaseCommand):
             
             print(ss)
             
+            s = ss.shootingscene_set.filter(finished=0).first()
             
+            if s is None:
+                return
+            
+            print(s)
             
             return

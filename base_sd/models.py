@@ -91,6 +91,8 @@ class ShootingScene(AbstractModel):
     start = models.CharField(max_length=12, null=True, blank=True, verbose_name='起始时间')
     end = models.CharField(max_length=12, null=True, blank=True, verbose_name='结束时间')
     
+    finished = models.BooleanField(default=False)
+    
     # video = models.FileField(upload_to=r'V:\static\media\uploaded', null=True, blank=True, verbose_name='生成的视频')
     
     class Meta:
