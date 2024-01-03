@@ -5,6 +5,7 @@ Created on 2015年8月14日
 @author: root
 '''
 
+import os
 import subprocess
 
 from django.core.management.base import BaseCommand
@@ -51,6 +52,9 @@ class Command(BaseCommand):
             subprocess.Popen(
                 f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''', 
                 shell=True)
+            
+            s.finished = os.path.lexists(s.fpath_video)
+            s.save()
 
 
             
