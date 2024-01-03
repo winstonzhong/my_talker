@@ -35,7 +35,7 @@ class Command(BaseCommand):
             
             print(ss)
             
-            s = ss.shootingscene_set.filter(finished=0).first()
+            s = ss.shootingscene_set.filter(finished=0).exclude(scene='').first()
             
             if s is None:
                 return
