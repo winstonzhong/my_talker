@@ -5,6 +5,8 @@ Created on 2015年8月14日
 @author: root
 '''
 
+import subprocess
+
 from django.core.management.base import BaseCommand
 import torch
 
@@ -42,8 +44,14 @@ class Command(BaseCommand):
             
             print(s)
             
-            print(s.fpath_input, s.fpath_audio_4080, s.fpath_video)
+            # print(s.fpath_input, s.fpath_audio_4080, s.fpath_video)
             
-            print(f'''python3 /home/oem/workspace/video-retalking/inference.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''')
+            # print(f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''')
+
+            subprocess.Popen(
+                f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''', 
+                shell=True)
+
+
             
             return
