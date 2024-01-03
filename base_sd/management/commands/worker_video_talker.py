@@ -40,29 +40,30 @@ class Command(BaseCommand):
 
         if options.get('step'):
             # print('testing..')
-            ss = ShootingScript.objects.filter(finished=0).first()
-            if ss is None:
-                return
-            
-            print(ss)
-            
-            s = ss.shootingscene_set.filter(finished=0).exclude(scene='').first()
-            
-            if s is None:
-                return
-            
-            print(s)
+            # ss = ShootingScript.objects.filter(finished=0).first()
+            # if ss is None:
+            #     return
+            #
+            # print(ss)
+            #
+            # s = ss.shootingscene_set.filter(finished=0).exclude(scene='').first()
+            #
+            # if s is None:
+            #     return
+            #
+            # print(s)
             
             # print(s.fpath_input, s.fpath_audio_4080, s.fpath_video)
             
             # print(f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''')
-
-            subprocess.Popen(
-                f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''', 
-                shell=True)
-            
-            s.finished = os.path.lexists(s.fpath_video)
-            s.save()
+            s = self.get_shootingscene()
+            if s is not None:
+                subprocess.Popen(
+                    f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''', 
+                    shell=True)
+                
+                s.finished = os.path.lexists(s.fpath_video)
+                s.save()
 
 
             
