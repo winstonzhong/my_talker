@@ -42,6 +42,7 @@ class Command(BaseCommand):
             
             print(s)
             
+            print(s.fpath_input, s.fpath_audio_4080, s.fpath_video)
             
             
             return
