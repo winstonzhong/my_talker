@@ -44,5 +44,6 @@ class Command(BaseCommand):
             
             print(s.fpath_input, s.fpath_audio_4080, s.fpath_video)
             
+            print(f'''python3 /home/oem/workspace/video-retalking/inference.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''')
             
             return
