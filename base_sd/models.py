@@ -40,8 +40,10 @@ class ShootingScript(AbstractModel):
     audio = models.ForeignKey(Audio, verbose_name='人声', related_name='audio_voice', null=True, blank=True, on_delete=models.DO_NOTHING)
     music = models.ForeignKey(Audio, verbose_name='音乐', related_name='audio_music', null=True, blank=True, on_delete=models.DO_NOTHING)
     subtitles = models.TextField(null=True, blank=True)
+    finished = models.BooleanField(default=False)
     
-    # audio_trimed = models.ForeignKey(Audio, verbose_name='切分的音频', related_name='audio_trimed', null=True, blank=True, on_delete=models.DO_NOTHING)
+    timestr_start = models.CharField(max_length=20, null=True, blank=True, verbose_name='起始：hh:mm:ss,xxx')
+    timestr_end = models.CharField(max_length=20, null=True, blank=True, verbose_name='结束：hh:mm:ss,xxx')
     
     class Meta:
         verbose_name_plural = "拍摄脚本"
@@ -89,7 +91,7 @@ class ShootingScene(AbstractModel):
     start = models.CharField(max_length=12, null=True, blank=True, verbose_name='起始时间')
     end = models.CharField(max_length=12, null=True, blank=True, verbose_name='结束时间')
     
-    video = models.FileField(upload_to=r'V:\static\media\uploaded', null=True, blank=True, verbose_name='生成的视频')
+    # video = models.FileField(upload_to=r'V:\static\media\uploaded', null=True, blank=True, verbose_name='生成的视频')
     
     class Meta:
         verbose_name_plural = "场景"
