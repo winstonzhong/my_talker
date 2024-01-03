@@ -106,9 +106,13 @@ class ShootingScene(AbstractModel):
     def fpath_img(self):
         return f'{BASE_DIR}/{os.path.basename(self.scene.name)}'
     
+    @property
+    def fpath_input(self):
+        return self.fpath_img 
+    
     @cached_property
     def fpath_video(self):
-        return f'''{BASE_DIR}/{os.path.basename(self.scene.name).rsplit('.',1)[-2]}.mp4'''
+        return f'''{BASE_DIR}/output_{os.path.basename(self.scene.name).rsplit('.',1)[-2]}.mp4'''
     
     def has_video(self):
         return os.path.lexists(self.fpath_video)
