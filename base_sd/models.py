@@ -1,9 +1,11 @@
 import os
 
 from django.db import models
+from django.utils.functional import cached_property
 
 from caidao_tools.django.abstract import AbstractModel
-from django.utils.functional import cached_property
+from tool_ffmpeg import to_seconds, merge_mp4_wav
+
 
 BASE_DIR = '/mnt/56T/static/media/uploaded'
 
@@ -121,6 +123,16 @@ class ShootingScene(AbstractModel):
     def is_following(self):
         return not self.scene.name
     
+    @property
+    def duration_seconds(self):
+        return to_seconds(self.last_following.end) - to_seconds(self.start)
+    
+    def merge_video_directly(self):
+        merge_mp4_wav(self.fpath_input, 
+                      self.fpath_audio_4080, 
+                      self.fpath_video,
+                      self.duration_seconds,
+                      )
     
   
         
