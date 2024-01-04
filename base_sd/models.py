@@ -120,5 +120,7 @@ class ShootingScene(AbstractModel):
         
     def is_following(self):
         return not self.scene.name
+    
+    
   
         
