@@ -124,6 +124,10 @@ class ShootingScene(AbstractModel):
         return not self.scene.name
 
     @property
+    def next(self):
+        return ShootingScene.objects.filter(script=self.script, num__gt=self.num).order_by('num').first()
+
+    @property
     def last_following(self):
         assert not self.is_following()
         one = self
