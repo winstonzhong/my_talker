@@ -41,11 +41,12 @@ class Command(BaseCommand):
         if options.get('step'):
             s = self.get_shootingscene()
             if s is not None:
-                subprocess.Popen(
+                p = subprocess.Popen(
                     f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''', 
                     shell=True)
-                # s.finished = os.path.lexists(s.fpath_video)
-                # s.save()
+                s.finished = os.path.lexists(s.fpath_video)
+                s.save()
+                p.wait()
                 print(s.has_video())
             print('done!')
             return

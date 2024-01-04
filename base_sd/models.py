@@ -39,7 +39,7 @@ class ShootingScript(AbstractModel):
     name = models.CharField(max_length=20, null=True, blank=True, verbose_name='剧本名')
     audio = models.ForeignKey(Audio, verbose_name='人声', related_name='audio_voice', null=True, blank=True, on_delete=models.DO_NOTHING)
     music = models.ForeignKey(Audio, verbose_name='音乐', related_name='audio_music', null=True, blank=True, on_delete=models.DO_NOTHING)
-    subtitles = models.TextField(null=True, blank=True)
+    remark = models.TextField(null=True, blank=True, verbose_name='备注')
     finished = models.BooleanField(default=False)
     
     timestr_start = models.CharField(max_length=20, null=True, blank=True, verbose_name='起始：hh:mm:ss,xxx')
