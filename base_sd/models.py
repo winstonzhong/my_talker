@@ -122,6 +122,16 @@ class ShootingScene(AbstractModel):
         
     def is_following(self):
         return not self.scene.name
+
+    @property
+    def last_following(self):
+        assert not self.is_following()
+        one = self
+        while 1:
+            n = one.next
+            if n is None or not n.is_following():
+                return one
+            one = n
     
     @property
     def duration_seconds(self):
