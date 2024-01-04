@@ -44,9 +44,9 @@ class Command(BaseCommand):
                 p = subprocess.Popen(
                     f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''', 
                     shell=True)
-                s.finished = os.path.lexists(s.fpath_video)
-                s.save()
                 p.wait()
-                print(s.has_video())
+                s.finished = s.has_video()
+                s.save()
+                print(s.finished)
             print('done!')
             return
