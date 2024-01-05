@@ -20,6 +20,7 @@ class Command(BaseCommand):
         parser.add_argument('--test', action='store_true', default=False)
         parser.add_argument('--step', action='store_true', default=False)
         parser.add_argument('--name', nargs = "?", default='', type=str)
+        parser.add_argument('--run', action='store_true', default=False)
 
 
 
@@ -33,20 +34,30 @@ class Command(BaseCommand):
         ss = ShootingScript.objects.filter(finished=0).first()
         return ss.shootingscene_set.filter(finished=0).exclude(scene='').first() if ss is not None else None
     
+    def step(self):
+        s = self.get_shootingscene()
+        if s is not None:
+            print(s)
+            p = subprocess.Popen(
+                f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''', 
+                shell=True)
+            p.wait()
+            s.finished = s.has_video()
+            s.save()
+            print(s.finished)
+            print('done!')
+            return s
+        
 
     def handle(self, *args, **options):
         if options.get('test'):
             print(self.get_shootingscene())
 
         if options.get('step'):
-            s = self.get_shootingscene()
-            if s is not None:
-                p = subprocess.Popen(
-                    f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''', 
-                    shell=True)
-                p.wait()
-                s.finished = s.has_video()
-                s.save()
-                print(s.finished)
-            print('done!')
+            self.step()
             return
+        
+        if options.get('run'):
+            while self.step() is not None:
+                pass
+    
