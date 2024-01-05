@@ -23,9 +23,12 @@ class Actor(AbstractModel):
 
 class Audio(AbstractModel):
     sound_name = models.CharField(max_length=255, null=True, blank=True, verbose_name='声音名称')
-    audio = models.FileField(upload_to=r'V:\static\media\uploaded', null=True, blank=True, verbose_name='原声')
+    audio = models.FileField(upload_to=BASE_DIR, null=True, blank=True, verbose_name='原声')
     url = models.URLField(null=True,blank=True, verbose_name='来源网址')
     subtitles = models.TextField(null=True, blank=True)
+    
+    voice = models.FileField(upload_to=BASE_DIR, null=True, blank=True, verbose_name='人声')
+    srt = models.FileField(upload_to=BASE_DIR, null=True, blank=True, verbose_name='字幕')
 
     class Meta:
         verbose_name_plural = "音频"
