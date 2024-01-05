@@ -37,6 +37,14 @@ class Audio(AbstractModel):
     def url_sound(self):
         return f'/static/{self.audio.name}'
     
+    @property
+    def fpath(self):
+        if self.voice.name:
+            return self.voice.path
+        elif self.audio.name:
+            return self.audio.path
+    
+    
 class ShootingScript(AbstractModel):
     name = models.CharField(max_length=20, null=True, blank=True, verbose_name='剧本名')
     audio = models.ForeignKey(Audio, verbose_name='人声', related_name='audio_voice', null=True, blank=True, on_delete=models.DO_NOTHING)
@@ -55,8 +63,8 @@ class ShootingScript(AbstractModel):
     
     @property
     def fpath_auido_trimed(self):
-        return os.path.join(os.path.dirname(self.audio.audio.path),
-                            f'trimed_{os.path.basename(self.audio.audio.path)}',                            
+        return os.path.join(os.path.dirname(self.audio.fpath),
+                            f'trimed_{os.path.basename(self.audio.fpath)}',                            
                             )
     
     def has_audio_trimed(self):
