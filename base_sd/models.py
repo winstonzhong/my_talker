@@ -94,19 +94,23 @@ class ShootingScene(AbstractModel):
     
     subtitle = models.CharField(max_length=255, null=True, blank=True, verbose_name='字幕')
     
-    scene = models.FileField(upload_to=r'V:\static\media\uploaded', null=True, blank=True)
+    scene = models.FileField(upload_to=BASE_DIR, null=True, blank=True)
     
     actor1 = models.ForeignKey(Actor, verbose_name='演员左1', related_name='actor1', null=True, blank=True, on_delete=models.DO_NOTHING)
     actor2 = models.ForeignKey(Actor, verbose_name='演员左2', related_name='actor2', null=True, blank=True, on_delete=models.DO_NOTHING)
     actor3 = models.ForeignKey(Actor, verbose_name='演员左3', related_name='actor3', null=True, blank=True, on_delete=models.DO_NOTHING)
-    # actor4 = models.ForeignKey(Actor, verbose_name='演员左4', related_name='actor4', null=True, blank=True, on_delete=models.DO_NOTHING)
-    # actor5 = models.ForeignKey(Actor, verbose_name='演员左5', related_name='actor5', null=True, blank=True, on_delete=models.DO_NOTHING)
     start = models.CharField(max_length=12, null=True, blank=True, verbose_name='起始时间')
     end = models.CharField(max_length=12, null=True, blank=True, verbose_name='结束时间')
     
+    start_clip_id = models.PositiveBigIntegerField(null=True, blank=True, verbose_name='开始片段id')
+    
     finished = models.BooleanField(default=False)
     
-    # video = models.FileField(upload_to=r'V:\static\media\uploaded', null=True, blank=True, verbose_name='生成的视频')
+    no_face = models.BooleanField(default=False)
+    
+    flag_need_retrim_audio = models.BooleanField(default=False, verbose_name='需重切分音频')
+    flag_need_retrim_video = models.BooleanField(default=False, verbose_name='需重切分视频')
+    flag_need_retalk_video = models.BooleanField(default=False, verbose_name='需合成说话视频')
     
     class Meta:
         verbose_name_plural = "场景"

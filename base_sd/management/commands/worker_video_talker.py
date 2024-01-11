@@ -11,7 +11,7 @@ import subprocess
 from django.core.management.base import BaseCommand
 import torch
 
-from base_sd.models import ShootingScript
+from base_sd.models import ShootingScript, ShootingScene
 from my_talker.settings import ROOT_DIR
 
 
@@ -31,8 +31,9 @@ class Command(BaseCommand):
         #     args.device = "cpu"
     
     def get_shootingscene(self):
-        ss = ShootingScript.objects.filter(finished=0).first()
-        return ss.shootingscene_set.filter(finished=0).exclude(scene='').first() if ss is not None else None
+        # ss = ShootingScript.objects.filter(finished=0).first()
+        # return ss.shootingscene_set.filter(finished=0).exclude(scene='').first() if ss is not None else None
+        return ShootingScene.objects.filter(flag_need_retalk_video=1).first()
     
     def step(self):
         s = self.get_shootingscene()
