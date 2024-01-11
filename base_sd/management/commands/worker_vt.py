@@ -41,16 +41,11 @@ class Command(BaseCommand):
         if s is not None:
             print(s)
             fpath = get_fpath_to_save_in_uploaded('mp4')
-            # fpath = s.result.path
-            s.result = to_relative(fpath)
-            print(fpath, s.result.name)
-            
-            return 
             p = subprocess.Popen(
                 f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.scene.path}   --audio {s.audio.path}   --outfile {fpath}''', 
                 shell=True)
             p.wait()
-            
+            s.result = to_relative(fpath)            
             s.finished = os.path.lexists(fpath)
             s.save()
             print(s.finished)
