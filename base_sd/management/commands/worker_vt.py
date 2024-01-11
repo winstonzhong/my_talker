@@ -47,7 +47,7 @@ class Command(BaseCommand):
             p.wait()
             s.result = to_relative(fpath)            
             s.finished = os.path.lexists(fpath)
-            s.flag_need_retalk_video = not self.finished
+            s.flag_need_retalk_video = not s.finished
             s.save()
             print(s.finished)
             print('done!')
