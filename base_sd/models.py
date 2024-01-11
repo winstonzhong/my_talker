@@ -9,7 +9,7 @@ from tool_ffmpeg import to_seconds, merge_mp4_wav
 
 REMOTE_BASE_DIR = ''
 
-BASE_DIR = r'V:\static\media\uploaded'
+BASE_DIR = r''
 
 class Actor(AbstractModel):
     name = models.CharField(max_length=20)
@@ -98,7 +98,9 @@ class ShootingScene(AbstractModel):
     
     subtitle = models.CharField(max_length=255, null=True, blank=True, verbose_name='字幕')
     
-    scene = models.FileField(upload_to=REMOTE_BASE_DIR, null=True, blank=True)
+    audio = models.FileField(upload_to=BASE_DIR, null=True, blank=True, verbose_name='音频')
+    
+    scene = models.FileField(upload_to=BASE_DIR, null=True, blank=True)
     
     actor1 = models.ForeignKey(Actor, verbose_name='演员左1', related_name='actor1', null=True, blank=True, on_delete=models.DO_NOTHING)
     actor2 = models.ForeignKey(Actor, verbose_name='演员左2', related_name='actor2', null=True, blank=True, on_delete=models.DO_NOTHING)
@@ -116,18 +118,19 @@ class ShootingScene(AbstractModel):
     flag_need_retrim_video = models.BooleanField(default=False, verbose_name='需重切分视频')
     flag_need_retalk_video = models.BooleanField(default=False, verbose_name='需合成说话视频')
     
-    result = models.FileField(upload_to=REMOTE_BASE_DIR, null=True, blank=True, verbose_name='结果视频')
+    result = models.FileField(upload_to=BASE_DIR, null=True, blank=True, verbose_name='结果视频')
     
     class Meta:
         verbose_name_plural = "场景"
 
     @cached_property
     def fpath_audio_4080(self):
-        return f'{REMOTE_BASE_DIR}/{self.script.id}_{self.num}_{self.id}_{os.path.basename(self.script.fpath_auido_trimed)}'
+        return 
+        # return f'{REMOTE_BASE_DIR}/{self.script.id}_{self.num}_{self.id}_{os.path.basename(self.script.fpath_auido_trimed)}'
     
     @cached_property
     def fpath_img(self):
-        return self.scene.path.replace('\\', '/')
+        return self.scene.path#.replace('\\', '/')
         # return f'{REMOTE_BASE_DIR}/{os.path.basename(self.scene.name)}'
     
     @property
