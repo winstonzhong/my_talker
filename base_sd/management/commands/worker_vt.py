@@ -13,6 +13,7 @@ import torch
 
 from base_sd.models import ShootingScript, ShootingScene
 from my_talker.settings import ROOT_DIR
+from tool_file import get_fpath_to_save_in_uploaded, to_relative
 
 
 class Command(BaseCommand):
@@ -39,11 +40,13 @@ class Command(BaseCommand):
         s = self.get_shootingscene()
         if s is not None:
             print(s)
+            fpath = get_fpath_to_save_in_uploaded('mp4')
             p = subprocess.Popen(
-                f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.fpath_input}   --audio {s.fpath_audio_4080}   --outfile {s.fpath_video}''', 
+                f'''python3 /home/oem/workspace/video-retalking/inference_shell.py   --face {s.scene.path}   --audio {s.audio.path}   --outfile {fpath}''', 
                 shell=True)
             p.wait()
-            s.finished = s.has_video()
+            self.result = to_relative(fpath)
+            s.finished = os.path.lexists(fpath)
             s.save()
             print(s.finished)
             print('done!')
