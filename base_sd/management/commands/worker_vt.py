@@ -40,7 +40,7 @@ class Command(BaseCommand):
         s = self.get_shootingscene()
         if s is not None:
             print(s)
-            fpath = get_fpath_to_save_in_uploaded('mp4', mk_dirs_if_not_exists=False)
+            fpath = get_fpath_to_save_in_uploaded('mp4', remote=True)
             s.result = to_relative(fpath)
             fpath = s.result.path
             
