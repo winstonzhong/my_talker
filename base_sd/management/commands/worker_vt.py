@@ -54,7 +54,7 @@ class Command(BaseCommand):
         if options.get('test'):
             s = self.get_shootingscene()
             print(s)
-            print(s.fpath_input)
+            print('path:', s.audio.path)
 
         if options.get('step'):
             self.step()
