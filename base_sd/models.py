@@ -7,7 +7,9 @@ from caidao_tools.django.abstract import AbstractModel
 from tool_ffmpeg import to_seconds, merge_mp4_wav
 
 
-BASE_DIR = '/mnt/56T/static/media/uploaded'
+REMOTE_BASE_DIR = '/mnt/56T/static/media/uploaded'
+
+BASE_DIR = r'V:\static\media\uploaded'
 
 class Actor(AbstractModel):
     name = models.CharField(max_length=20)
@@ -86,6 +88,8 @@ class ShootingScript(AbstractModel):
     def end_time(self):
         return self.shootingscene_set.order_by('num').last().end
 
+
+
 class ShootingScene(AbstractModel):
     script = models.ForeignKey(ShootingScript, verbose_name='拍摄脚本', null=True, blank=True, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=20, null=True, blank=True)
@@ -117,11 +121,11 @@ class ShootingScene(AbstractModel):
 
     @cached_property
     def fpath_audio_4080(self):
-        return f'{BASE_DIR}/{self.script.id}_{self.num}_{self.id}_{os.path.basename(self.script.fpath_auido_trimed)}'
+        return f'{REMOTE_BASE_DIR}/{self.script.id}_{self.num}_{self.id}_{os.path.basename(self.script.fpath_auido_trimed)}'
     
     @cached_property
     def fpath_img(self):
-        return f'{BASE_DIR}/{os.path.basename(self.scene.name)}'
+        return f'{REMOTE_BASE_DIR}/{os.path.basename(self.scene.name)}'
     
     @property
     def fpath_input(self):
@@ -129,7 +133,7 @@ class ShootingScene(AbstractModel):
     
     @cached_property
     def fpath_video(self):
-        return f'''{BASE_DIR}/output_{os.path.basename(self.scene.name).rsplit('.',1)[-2]}.mp4'''
+        return f'''{REMOTE_BASE_DIR}/output_{os.path.basename(self.scene.name).rsplit('.',1)[-2]}.mp4'''
     
     def has_video(self):
         return os.path.lexists(self.fpath_video)
