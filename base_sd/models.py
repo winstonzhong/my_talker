@@ -7,7 +7,7 @@ from caidao_tools.django.abstract import AbstractModel
 from tool_ffmpeg import to_seconds, merge_mp4_wav
 
 
-REMOTE_BASE_DIR = '/mnt/56T/static/media/uploaded'
+REMOTE_BASE_DIR = ''
 
 BASE_DIR = r'V:\static\media\uploaded'
 
