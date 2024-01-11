@@ -116,6 +116,8 @@ class ShootingScene(AbstractModel):
     flag_need_retrim_video = models.BooleanField(default=False, verbose_name='需重切分视频')
     flag_need_retalk_video = models.BooleanField(default=False, verbose_name='需合成说话视频')
     
+    result = models.FileField(upload_to=BASE_DIR, null=True, blank=True, verbose_name='结果视频')
+    
     class Meta:
         verbose_name_plural = "场景"
 
@@ -125,7 +127,8 @@ class ShootingScene(AbstractModel):
     
     @cached_property
     def fpath_img(self):
-        return f'{REMOTE_BASE_DIR}/{os.path.basename(self.scene.name)}'
+        return self.scene.path.replace('\\', '/')
+        # return f'{REMOTE_BASE_DIR}/{os.path.basename(self.scene.name)}'
     
     @property
     def fpath_input(self):
