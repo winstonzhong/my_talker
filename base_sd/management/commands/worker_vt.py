@@ -52,7 +52,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options.get('test'):
-            print(self.get_shootingscene())
+            s = self.get_shootingscene()
+            print(s)
+            print(s.fpath_input)
 
         if options.get('step'):
             self.step()
